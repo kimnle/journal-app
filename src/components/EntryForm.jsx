@@ -8,7 +8,7 @@
     // <EntryForm entryId={123456789zwsxedcrtvybuhnjmi} />
 // </JournalEntryContainer>
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useJournalEntriesData, useJournalEntriesSetter } from "../contexts/EntriesContext";
 
 export default function EntryForm({entryId}) {
@@ -20,24 +20,56 @@ export default function EntryForm({entryId}) {
     let [localName, setLocalName] = useState("Default Post Name");
     let [localContent, setLocalContent] = useState("Write your journal entry here.");
     let [localAuthor, setLocalAuthor] = useState("Super Cool Author - that's you!!");
-    let [localLastEdited, setLocalLastEdited] = useState(Date.now());
+
+    useEffect(() => {
+        if (localId) {
+            let specificPost = journalEntriesData.find((entry) => entry.id == localId);
+
+            setLocalAuthor(specificPost.author);
+            setLocalContent(specificPost.content);
+            setLocalName(specificPost.name);
+            setLocalType(specificPost.type);
+        }
+
+    }, [localId]);
 
     const handleSubmission = () => {
         setJournalEntries(currentJournalEntries => {
-            let newEntry = {
-                lastEdited: Date.now(),
-                author: localAuthor,
-                content: localContent,
-                name: localName,
-                type: localType,
-                id: localId ? localId : crypto.randomUUID()
+            if (localId) {
+                // if ID exists, we are EDITING
+                console.log("Searching existing data for ID of: " + localId);
+                let tempEntriesCopy = [...currentJournalEntries];
+                tempEntriesCopy.forEach((entry, index) => {
+                    if (entry)
+                    entry = {
+                        lastEdited: Date.now(),
+                        author: localAuthor,
+                        content: localContent,
+                        name: localName,
+                        type: localType,
+                        id: localId ? localId : crypto.randomUUID()
+                    }
+                });
+                return tempEntriesCopy;
+            } else {
+                // else, we are CREATING
+
+                let newEntry = {
+                    lastEdited: Date.now(),
+                    author: localAuthor,
+                    content: localContent,
+                    name: localName,
+                    type: localType,
+                    id: localId ? localId : crypto.randomUUID()
+                }
+                
+                // let someNewArray = currentJournalEntries;
+                // someNewArray.push(newEntry);
+                // return someNewArray;
+
+                return [...currentJournalEntries, newEntry];
             }
-
-            // let someNewArray = currentJournalEntries;
-            // someNewArray.push(newEntry);
-            // return someNewArray;
-
-            return [...currentJournalEntries, newEntry];
+            
         });
     }
 

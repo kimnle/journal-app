@@ -16,7 +16,7 @@ export default function JournalEntryContainer({entryId}) {
         // and sdet that into {currentJournalEntry}
         let currentEntry = journalEntriesData.find((entry) => entry.id == entryId);
         setCurrentJournalEntry(currentEntry);
-    }, []);
+    }, [journalEntriesData]);
 
     if (isEditing) {
         return <>

@@ -1,7 +1,7 @@
-export default function ViewEntry({entryId}) {
+export default function ViewEntry({journalEntry}) {
 
     if (journalEntry.name) {
-        return <div>
+        return <div id={journalEntry.id}>
             {/* Actual journal entry content to view!! */}
             <h1>{journalEntry.name}</h1>
             <h2>Written by: {journalEntry.author}</h2>
