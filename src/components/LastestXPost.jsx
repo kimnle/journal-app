@@ -29,7 +29,7 @@ export default function LatestXPost({limit}) {
             tempListCopy.length = limit;
         }
 
-        console.log("Sorted post list value");
+        console.log("Sorted post list value is:");
         console.log(tempListCopy);
         setProcessedPostList(tempListCopy);
 
@@ -38,7 +38,7 @@ export default function LatestXPost({limit}) {
     return(
         <>
             {sortedAndTrimmedPostList.map((entry) => {
-                return <JournalEntryContainer entryId={entry.id} />
+                return <JournalEntryContainer key={entry.id} entryId={entry.id} />
             })}
         </>
     )

@@ -35,19 +35,21 @@ export default function EntryForm({entryId}) {
 
     const handleSubmission = () => {
         setJournalEntries(currentJournalEntries => {
+
             if (localId) {
                 // if ID exists, we are EDITING
                 console.log("Searching existing data for ID of: " + localId);
                 let tempEntriesCopy = [...currentJournalEntries];
                 tempEntriesCopy.forEach((entry, index) => {
-                    if (entry)
-                    entry = {
-                        lastEdited: Date.now(),
-                        author: localAuthor,
-                        content: localContent,
-                        name: localName,
-                        type: localType,
-                        id: localId ? localId : crypto.randomUUID()
+                    if (entry.id == localId) {
+                        tempEntriesCopy[index] = {
+                            lastEdited: Date.now(),
+                            author: localAuthor,
+                            content: localContent,
+                            name: localName,
+                            type: localType,
+                            id: localId ? localId : crypto.randomUUID()
+                        }
                     }
                 });
                 return tempEntriesCopy;
