@@ -15,9 +15,9 @@ export default function EntryForm({entryId}) {
     let journalEntriesData = useJournalEntriesData();
     let setJournalEntries = useJournalEntriesSetter();
 
-    let [localId, setLocalId] = useState(entryId ? entryId.toString() : crypto.randomUUID());
+    let [localId, setLocalId] = useState(entryId ? entryId.toString() : null);
     let [localType, setLocalType] = useState("");
-    let [localName, setLocalName] = useState("Dault Post Name");
+    let [localName, setLocalName] = useState("Default Post Name");
     let [localContent, setLocalContent] = useState("Write your journal entry here.");
     let [localAuthor, setLocalAuthor] = useState("Super Cool Author - that's you!!");
     let [localLastEdited, setLocalLastEdited] = useState(Date.now());
@@ -30,7 +30,7 @@ export default function EntryForm({entryId}) {
                 content: localContent,
                 name: localName,
                 type: localType,
-                id: localId
+                id: localId ? localId : crypto.randomUUID()
             }
 
             // let someNewArray = currentJournalEntries;

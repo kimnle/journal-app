@@ -13,7 +13,7 @@ const JournalEntriesSetterContext = createContext(null);
 export function useJournalEntriesData() {
     console.log("Passing data around!!");
     
-    let currentJournalData = useContext(JournalEntriesContext);
+    let currentJournalData = useContext(JournalEntriesDataContext);
     if (currentJournalData.length == 0) {
         console.log("No entries to show!!");
     }
@@ -31,11 +31,11 @@ export default function JournalEntriesProvider(props) {
     let [journalEntries, setJournalEntries] = useState([]);
 
     useEffect(() => {
-        console.log(journalEntries);
-        
-    })
+        console.log(journalEntries);   
+    }, [journalEntries]);
     
     return(
+
         // <JournalEntriesContext.Provider value={journalEntries, setJournalEntries}>
         <JournalEntriesDataContext.Provider value={journalEntries}>
             <JournalEntriesSetterContext.Provider value={setJournalEntries}>
